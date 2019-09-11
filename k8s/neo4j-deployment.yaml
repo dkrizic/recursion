@@ -36,6 +36,9 @@ spec:
         ports:
         - containerPort: 7687
           protocol: TCP
+        env:
+        - name: NEO4J_dbms_security_auth__enabled
+          value: "false"
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
