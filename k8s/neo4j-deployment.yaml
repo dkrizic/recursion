@@ -19,6 +19,16 @@ spec:
       labels:
         run: neo4j
     spec:
+      initContainers:
+      - image: busybox
+        name: copy-snapshot
+        command: ["/bin/sh"]
+        args: ["-c", "set -x; mkdir -p /data/databases; cp -r /snapshots/graph.db /data/databases"]
+        volumeMounts:
+        - mountPath: /snapshots
+          name: data-snapshots
+        - mountPath: /data
+          name: data-inmemory
       containers:
       - image: neo4j
         imagePullPolicy: Always
@@ -38,6 +48,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
+      - name: data-snapshots
+        persistentVolumeClaim:
+          claimName: neo4j-snapshots
       - name: data-inmemory
         emptyDir:
           medium: Memory

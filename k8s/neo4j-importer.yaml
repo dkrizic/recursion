@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: neo4j-importer
+  name: neo4j-importer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: neo4j-importer
+  template:
+    metadata:
+      labels:
+        run: neo4j-importer
+    spec:
+      containers:
+      - image: busybox
+        command:
+        - sleep
+        - "3600"
+        volumeMounts:
+        - mountPath: /snapshots
+          name: data-snapshots
+        name: neo4j
+      volumes:
+      - name: data-snapshots
+        persistentVolumeClaim:
+          claimName: neo4j-snapshots
