@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: neo4j
+  name: neo4j
+spec:
+  ports:
+  - port: 7687
+    protocol: TCP
+    targetPort: 7687
+  selector:
+    run: neo4j
+  sessionAffinity: None
+  type: ClusterIP
