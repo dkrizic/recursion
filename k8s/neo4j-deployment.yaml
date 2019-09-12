@@ -31,7 +31,7 @@ spec:
           name: data-inmemory
       containers:
       - image: neo4j
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: neo4j
         ports:
         - containerPort: 7687
